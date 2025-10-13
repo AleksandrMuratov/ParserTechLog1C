@@ -42,4 +42,22 @@ namespace parser_string {
 		return result;
 	}
 
+	std::wstring_view LTrip(std::wstring_view str, wchar_t symbol) {
+		size_t pos = str.find_first_not_of(symbol);
+		str.remove_prefix(pos);
+		return str;
+	}
+
+	std::wstring_view RTrip(std::wstring_view str, wchar_t symbol) {
+		size_t pos = str.find_last_not_of(symbol);
+		str.remove_suffix(str.size() - pos - 1);
+		return str;
+	}
+
+	std::wstring_view LRTrip(std::wstring_view str, wchar_t symbol) {
+		str = LTrip(str, symbol);
+		str = RTrip(str, symbol);
+		return str;
+	}
+
 } // namespace parser_string

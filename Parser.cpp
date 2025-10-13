@@ -27,12 +27,19 @@ namespace parser_tech_log_1c {
 		std::wstring filename_with_extension = path.filename().wstring();
 		std::wstring filename = filename_with_extension.substr(0, filename_with_extension.size() - 4);
 		YearMonthDayHour ymdh = parsing_filename(filename);
-		std::wstring line;
 		std::wstring bufer;
 		bool first = true;
 		bool first_message = true; // for a special character at the beginning of the file
 		int num_str = 0;
-		while (std::getline(inFile, line)) {
+		//std::wstring buf_file;
+		//std::getline(inFile, buf_file, wchar_t(EOF)); 
+		size_t file_size = std::filesystem::file_size(path);
+		std::wstring buf_file(file_size, L' ');
+		inFile.read(&buf_file[0], file_size);
+		std::wstring_view buf_file_v = parser_string::LRTrip(buf_file);
+
+		std::vector<std::wstring_view> lines(parser_string::SplitView(buf_file_v, L'\n'));
+		for (auto& line : lines) {
 			++num_str;
 			std::wstring_view timestamp;
 			if (line.size() > 6) {

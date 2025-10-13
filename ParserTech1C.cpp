@@ -13,6 +13,7 @@
 #include <filesystem>
 #include <exception>
 #include <execution>
+#include "ParserString.h"
 
 using namespace std;
 
@@ -38,11 +39,29 @@ void TestParserFile() {
 		std::filesystem::path path("D:\\tech_log_parser\\1C_LOG\\EXCP\\rphost_3912\\25100109.log");
 		parser_tech_log_1c::ParserFile parser;
 		auto messages = parser.parsing(path);
+		for (auto& message : messages) {
+			std::wcout << message << L'\n';
+		}
 		std::wcout << messages.size() << L" messages";
 	}
 	catch (const std::exception& ex) {
 		std::cerr << ex.what();
 	}
+}
+
+void TestTripString() {
+	std::wstring str = L"   abc   ";
+	auto str_view = parser_string::LRTrip(str, L' ');
+	std::wcout << str_view << L" Size:" << str_view.size() << L'\n';
+	std::wstring str2 = L"abc   ";
+	auto str2_view = parser_string::LRTrip(str, L' ');
+	std::wcout << str2_view << L" Size:" << str2_view.size() << L'\n';
+	std::wstring str3 = L"   abc";
+	auto str3_view = parser_string::LRTrip(str, L' ');
+	std::wcout << str3_view << L" Size:" << str3_view.size() << L'\n';
+	std::wstring str4 = L"   abc\n";
+	std::wstring_view str4_view = str4; // parser_string::LRTrip(str, L' ');
+	std::wcout << str4_view << L" Size:" << str4_view.size() << L'\n';
 }
 
 int main()
@@ -52,5 +71,6 @@ int main()
 	_setmode(_fileno(stdin), _O_U16TEXT);
 	//_setmode(_fileno(stderr), _O_U16TEXT);
 	TestParser();
+	//TestTripString();
 	return 0;
 }
