@@ -43,12 +43,18 @@ namespace parser_string {
 	}
 
 	std::wstring_view LTrip(std::wstring_view str, wchar_t symbol) {
+		if (str.empty()) {
+			return str;
+		}
 		size_t pos = str.find_first_not_of(symbol);
 		str.remove_prefix(pos);
 		return str;
 	}
 
 	std::wstring_view RTrip(std::wstring_view str, wchar_t symbol) {
+		if (str.empty()) {
+			return str;
+		}
 		size_t pos = str.find_last_not_of(symbol);
 		str.remove_suffix(str.size() - pos - 1);
 		return str;

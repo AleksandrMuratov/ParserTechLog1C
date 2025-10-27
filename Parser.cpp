@@ -13,14 +13,14 @@ namespace parser_tech_log_1c {
 
 	ParserFile::ParserFile():
 	current_ymd(std::chrono::floor<std::chrono::days>(std::chrono::system_clock::now())),
-	inFile(){
-		inFile.imbue(std::locale("ru_RU.UTF-8"));
+	in_file(){
+		in_file.imbue(std::locale("ru_RU.UTF-8"));
 	};
 
 	std::vector<Message> ParserFile::parsing(const std::filesystem::path& path) {
 		std::vector<Message> result;
-		inFile.open(path);
-		if (!inFile.is_open()) {
+		in_file.open(path);
+		if (!in_file.is_open()) {
 			std::string error = "File is not open: " + path.string() + "\n";
 			throw std::invalid_argument(error);
 		}
@@ -35,7 +35,7 @@ namespace parser_tech_log_1c {
 		//std::getline(inFile, buf_file, wchar_t(EOF)); 
 		size_t file_size = std::filesystem::file_size(path);
 		std::wstring buf_file(file_size, L' ');
-		inFile.read(&buf_file[0], file_size);
+		in_file.read(&buf_file[0], file_size);
 		std::wstring_view buf_file_v = parser_string::LRTrip(buf_file);
 
 		std::vector<std::wstring_view> lines(parser_string::SplitView(buf_file_v, L'\n'));
@@ -67,7 +67,7 @@ namespace parser_tech_log_1c {
 		if (!bufer.empty()) {
 			result.push_back(parsing_message(path, bufer, ymdh, first_message, num_str));
 		}
-		inFile.close();
+		in_file.close();
 		return result;
 	}
 

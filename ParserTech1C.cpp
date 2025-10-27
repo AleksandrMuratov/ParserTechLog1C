@@ -54,14 +54,17 @@ void TestTripString() {
 	auto str_view = parser_string::LRTrip(str, L' ');
 	std::wcout << str_view << L" Size:" << str_view.size() << L'\n';
 	std::wstring str2 = L"abc   ";
-	auto str2_view = parser_string::LRTrip(str, L' ');
+	auto str2_view = parser_string::LRTrip(str2, L' ');
 	std::wcout << str2_view << L" Size:" << str2_view.size() << L'\n';
 	std::wstring str3 = L"   abc";
-	auto str3_view = parser_string::LRTrip(str, L' ');
+	auto str3_view = parser_string::LRTrip(str3, L' ');
 	std::wcout << str3_view << L" Size:" << str3_view.size() << L'\n';
 	std::wstring str4 = L"   abc\n";
-	std::wstring_view str4_view = str4; // parser_string::LRTrip(str, L' ');
+	std::wstring_view str4_view = parser_string::LRTrip(str4, L' ');
 	std::wcout << str4_view << L" Size:" << str4_view.size() << L'\n';
+	std::wstring str5 = L"";
+	auto str5_view = parser_string::LRTrip(str5);
+	std::wcout << str5_view << L" Size:" << str5_view.size() << L'\n';
 }
 
 int main()

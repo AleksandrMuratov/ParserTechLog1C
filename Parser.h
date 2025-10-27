@@ -60,7 +60,7 @@ namespace parser_tech_log_1c {
 		bool validate(const YearMonthDayHour& ymdh) const;
 
 		std::chrono::year_month_day current_ymd;
-		std::wifstream inFile;
+		std::wifstream in_file;
 
 		const std::regex r;
 	};
@@ -80,11 +80,12 @@ namespace parser_tech_log_1c {
 
 		size_t size_empty_utf_file = 3;
 
-		struct AccessResult {
-
+		struct Cache {
+			std::vector<Message> messages;
+			std::vector<std::pair<YearMonthDayHour, YearMonthDayHour>> requests;
 		};
 
-		std::vector<Message> result;
+		Cache cache;
 	};
 
 	template<class ExecutionPolicy>
